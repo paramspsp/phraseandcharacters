@@ -1,0 +1,63 @@
+package com.phraseandcharacters.controller;
+
+import com.phraseandcharacter.controller.CharacterController;
+import com.phraseandcharacter.model.CharacterData;
+import com.phraseandcharacter.service.CharacterService;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class CharacterControllerTest {
+
+    @InjectMocks
+    CharacterController characterController;
+
+    @Mock
+    CharacterService characterService;
+
+    private static CharacterData characterData;
+
+    @BeforeAll
+    public static void setUp(){
+        characterData = new CharacterData();
+        characterData.setFirstName("Paramasivam");
+        characterData.setLastName("Palanisamy");
+        characterData.setPicture("http://www.trbimg.com/img-573a089a/turbine/ct-homer-simpson-live-pizza-debate-met-0517-20160516");
+        characterData.setAge("37");
+    }
+
+    @Test
+    public void testAddCharacter()
+    {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+        when(characterService.addCharacter(any(CharacterData.class))).thenReturn(true);
+        ResponseEntity<Object> responseEntity = characterController.addCharacter(characterData);
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
+        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/");
+    }
+
+    @Test
+    public void testgetSpecificCharactersByFirstNameContains()
+    {
+        when(characterService.findCharacterDataByFirstNameContains("Paramasivam")).thenReturn(Arrays.asList(characterData));
+        List<CharacterData> characterResults = characterController.getSpecificCharactersByFirstNameContains("Paramasivam");
+        assertThat(characterResults.size()).isEqualTo(1);
+        assertThat(characterResults.get(0).getFirstName()).isEqualTo(characterData.getFirstName());
+    }
+}
