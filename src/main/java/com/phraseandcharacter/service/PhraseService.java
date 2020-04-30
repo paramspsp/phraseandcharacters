@@ -1,5 +1,6 @@
 package com.phraseandcharacter.service;
 
+import com.phraseandcharacter.model.CharacterData;
 import com.phraseandcharacter.model.PhraseData;
 import com.phraseandcharacter.repository.PhraseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,13 @@ public class PhraseService {
         List<PhraseData>  phrases = new ArrayList<PhraseData>();
         it.forEach(e -> phrases.add(e));
         return phrases;
+    }
+
+    public void deletePhrase(String phraseId) {
+        PhraseData phraseData = phraseRepository.findPhraseDataBy_id(phraseId);
+        if(phraseData != null && phraseData.get_id() != null){
+            phraseRepository.delete(phraseData);
+        }
     }
 
 }

@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -47,9 +45,9 @@ public class CharacterController {
         if (characterData != null
                 && characterData.getFirstName() != null
                 && characterData.getAge() != null) {
-                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                    createdCharacterData = characterService.addCharacter(characterData);
                 } else {
-             createdCharacterData = characterService.addCharacter(characterData);
+                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
         //Check the service status and return the HTTP status values
@@ -59,5 +57,15 @@ public class CharacterController {
         else {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/deleteCharacter/{characterId}")
+    public ResponseEntity<Boolean> deleteCharacter(@PathVariable String characterId) {
+        try{
+            characterService.deleteCharacter(characterId);
+        }catch(Exception e){
+            return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }
 }

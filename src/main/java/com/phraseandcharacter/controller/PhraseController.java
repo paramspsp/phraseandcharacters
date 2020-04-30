@@ -54,4 +54,14 @@ public class PhraseController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("/deletePhrase/{phraseId}")
+    public ResponseEntity<Boolean> deletePhrase(@PathVariable String phraseId) {
+        try{
+            phraseService.deletePhrase(phraseId);
+        }catch(Exception e){
+            return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
+    }
 }
