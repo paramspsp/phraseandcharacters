@@ -44,7 +44,7 @@ public class PhraseControllerTest {
     {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(this.phraseService.addPhrase(any(PhraseData.class))).thenReturn(true);
+        when(this.phraseService.addPhrase(any(PhraseData.class))).thenReturn(phraseData);
         ResponseEntity<Object> responseEntity = this.phraseController.addPhrase(this.phraseData);
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
         assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/");

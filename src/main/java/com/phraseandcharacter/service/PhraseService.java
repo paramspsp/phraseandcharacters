@@ -14,13 +14,13 @@ public class PhraseService {
     @Autowired
     private PhraseRepository phraseRepository;
 
-    public synchronized boolean addPhrase(PhraseData phrase){
+    public synchronized PhraseData addPhrase(PhraseData phrase){
         PhraseData phraseData = phraseRepository.findPhraseDataBy_id(phrase.get_id());
         if (phraseData != null && phraseData.get_id() != null) {
-            return false;
+            return null;
         } else {
-            phraseRepository.save(phrase);
-            return true;
+            PhraseData createdPhraseData  = phraseRepository.save(phrase);
+            return createdPhraseData;
         }
     }
 

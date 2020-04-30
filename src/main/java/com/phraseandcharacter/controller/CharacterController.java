@@ -3,6 +3,7 @@ package com.phraseandcharacter.controller;
 import com.phraseandcharacter.model.CharacterData;
 import com.phraseandcharacter.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,16 +42,22 @@ public class CharacterController {
     @PostMapping(path= "/addCharacter", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addCharacter(@RequestBody CharacterData characterData) {
 
-        //add resource
-        characterService.addCharacter(characterData);
+        CharacterData createdCharacterData = null;
+        //Call the service and return the created object from database
+        if (characterData != null
+                && characterData.getFirstName() != null
+                && characterData.getAge() != null) {
+                    return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                } else {
+             createdCharacterData = characterService.addCharacter(characterData);
+        }
 
-        //Create resource location
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(characterData.get_id())
-                .toUri();
-
-        //Send location in response
-        return ResponseEntity.created(location).build();
+        //Check the service status and return the HTTP status values
+        if(createdCharacterData != null && createdCharacterData.get_id() != null) {
+            return new ResponseEntity<>(CharacterData.class, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

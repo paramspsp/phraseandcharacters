@@ -4,6 +4,7 @@ import com.phraseandcharacter.model.CharacterData;
 import com.phraseandcharacter.model.PhraseData;
 import com.phraseandcharacter.service.PhraseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,16 +36,22 @@ public class PhraseController {
     @PostMapping(path= "/addPhrase", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> addPhrase(@RequestBody PhraseData phraseData) {
 
-        //add resource
-        phraseService.addPhrase(phraseData);
+        PhraseData createdPhraseData = null;
+        //Call the phrase service and make sure that Phrase data is added into the system
+        if(phraseData != null
+                && phraseData.getPhrase() != null
+                && phraseData.getCharacter() != null){
+            createdPhraseData = phraseService.addPhrase(phraseData);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
 
-        //Create resource location
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(phraseData.get_id())
-                .toUri();
-
-        //Send location in response
-        return ResponseEntity.created(location).build();
+        //Check the service status and return the HTTP status values
+        if(createdPhraseData != null && createdPhraseData.get_id() != null) {
+            return new ResponseEntity<>(CharacterData.class, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

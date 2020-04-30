@@ -44,13 +44,13 @@ public class CharacterService {
         return characterRepository.count();
     }
 
-    public synchronized boolean addCharacter(CharacterData character){
+    public synchronized CharacterData addCharacter(CharacterData character){
         List<CharacterData> list = characterRepository.findCharacterDataByFirstNameAndLastName(character.getFirstName(), character.getLastName());
         if (list.size() > 0) {
-            return false;
+            return null;
         } else {
-            characterRepository.save(character);
-            return true;
+            CharacterData createdCharacterData = characterRepository.save(character);
+            return createdCharacterData;
         }
     }
 
