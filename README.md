@@ -56,7 +56,7 @@ The services may be accessed via HTTP requests. They return data in JSON format.
 
 ## User Interface to search character and phrases
 
-Application can be accessed from the below home page URL. Home page will be displayng the two options to navigate to phrase or character search. Both these pages will display the MDB JQuery data table accordingly. Data tables will be having the pagination, search option and navigate back to home page.
+Application can be accessed from the below home page URL. Home page will be displayng the two options to navigate to phrase or character search. Both these pages will display the MDB JQuery data table accordingly. Data tables will be having the pagination, search option and navigating back to home page.
 
 http://localhost:8083/home.html
 
