@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -46,10 +47,9 @@ public class CharacterControllerTest {
     {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(characterService.addCharacter(any(CharacterData.class))).thenReturn(true);
+        when(characterService.addCharacter(any(CharacterData.class))).thenReturn(characterData);
         ResponseEntity<Object> responseEntity = characterController.addCharacter(characterData);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/");
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
