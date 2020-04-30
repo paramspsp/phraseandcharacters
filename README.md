@@ -12,7 +12,7 @@ Provides simple REST APIs for searching Character and Phrases by using MDB Jquer
 
 1) Import the project or clone the project into an IDE either by clone or download option
 
-2) Application will be running on the 8093 and make sure no other services are using this port. Kill the process Refer to [application.properties](resources/application.properties)    
+2) Application will be running on the 8083 and make sure no other services are using this port. Kill the process Refer to [application.properties](resources/application.properties)    
 
 3) Identifying the port usage and killing the process (Mac os)
 
