@@ -39,7 +39,7 @@ public class CharacterControllerTest {
         characterData.setFirstName("Paramasivam");
         characterData.setLastName("Palanisamy");
         characterData.setPicture("http://www.trbimg.com/img-573a089a/turbine/ct-homer-simpson-live-pizza-debate-met-0517-20160516");
-        characterData.setAge("37");
+        characterData.setAge(37);
     }
 
     @Test

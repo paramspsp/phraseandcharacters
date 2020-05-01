@@ -25,6 +25,6 @@ public class CharacterData {
 
     private String picture;
 
-    private String age;
+    private int age;
 
 }

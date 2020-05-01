@@ -31,13 +31,13 @@ public class CharacterServiceTest {
         characterData1.setFirstName("Sathya");
         characterData1.setLastName("Paramasivam");
         characterData1.setPicture("http://www.trbimg.com/img-573a089a/turbine/ct-homer-simpson-live-pizza-debate-met-0517-20160516");
-        characterData1.setAge("35");
+        characterData1.setAge(35);
         characterData2 = new com.phraseandcharacter.model.CharacterData();
         characterData2.set_id("60fdff6419f9d6df24d593fe");
         characterData2.setFirstName("Kannan");
         characterData2.setLastName("Paramasivam");
         characterData2.setPicture("http://www.trbimg.com/img-573a089a/turbine/ct-homer-simpson-live-pizza-debate-met-0517-20160516");
-        characterData2.setAge("34");
+        characterData2.setAge(34);
     }
 
     @Test

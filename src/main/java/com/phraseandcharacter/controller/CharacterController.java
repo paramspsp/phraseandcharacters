@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/characters")
@@ -27,15 +28,32 @@ public class CharacterController {
     @GetMapping(path = "/specificCharactersByFirstName/{firstName}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<CharacterData> getSpecificCharactersByFirstNameContains(@PathVariable String firstName)
     {
-        List<CharacterData> characterData = characterService.findCharacterDataByFirstNameContains(firstName);
-        return characterData;
+        return characterService.findCharacterDataByFirstNameContains(firstName);
     }
 
     @GetMapping(path = "/specificCharactersByLastName/{lastName}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<CharacterData> getSpecificCharactersByLastNameContains(@PathVariable String lastName)
     {
-        List<CharacterData> characterData = characterService.findCharacterDataByLastNameContains(lastName);
-        return characterData;
+        return characterService.findCharacterDataByLastNameContains(lastName);
+    }
+
+    @GetMapping(path = "/specificPhrase/{characterId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> getSpecificCharacterById(@PathVariable String characterId)
+    {
+        Optional<CharacterData> characterData ;
+        try{
+            characterData = Optional.ofNullable(characterService.findCharacterDataBy_id(characterId));
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        //Check the service status and return the HTTP status values
+        if(characterData.isPresent()) {
+            return new ResponseEntity<Object>(characterData, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping(path= "/addCharacter", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -45,7 +63,9 @@ public class CharacterController {
         //Call the service and return the created object from database
         if (characterData != null
                 && characterData.getFirstName() != null
-                && characterData.getAge() != null) {
+                && characterData.getLastName() != null
+        && characterData.getPicture() != null
+        && characterData.getAge() > 0) {
                     createdCharacterData = characterService.addCharacter(characterData);
                 } else {
                     return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -53,7 +73,7 @@ public class CharacterController {
 
         //Check the service status and return the HTTP status values
         if(createdCharacterData != null && createdCharacterData.get_id() != null) {
-            return new ResponseEntity<>(CharacterData.class, HttpStatus.OK);
+            return new ResponseEntity<>(createdCharacterData, HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

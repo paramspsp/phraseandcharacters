@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/phrases")
@@ -31,6 +32,25 @@ public class PhraseController {
     {
         List<PhraseData> phraseData = phraseService.findPhraseDataByPhraseContains(phraseName);
         return phraseData;
+    }
+
+    @GetMapping(path = "/specificPhrase/{phraseId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> getSpecificPhraseById(@PathVariable String phraseId)
+    {
+        Optional<PhraseData> phraseData ;
+        try{
+            phraseData = Optional.ofNullable(phraseService.findPhraseDataBy_id(phraseId));
+        }catch(Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        //Check the service status and return the HTTP status values
+        if(phraseData.isPresent()) {
+            return new ResponseEntity<Object>(phraseData, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping(path= "/addPhrase", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
