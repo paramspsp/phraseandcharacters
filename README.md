@@ -12,7 +12,7 @@ Provides simple REST APIs for searching Character and Phrases by using MDB Jquer
 
 1) Import the project or clone the project into an IDE either by clone or download option
 
-2) Application will be running on the 8093 and make sure no other services are using this port. Kill the process Refer to [application.properties](resources/application.properties)    
+2) Application will be running on the 8083 and make sure no other services are using this port. Kill the process Refer to [application.properties](resources/application.properties)    
 
 3) Identifying the port usage and killing the process (Mac os)
 
@@ -56,7 +56,7 @@ The services may be accessed via HTTP requests. They return data in JSON format.
 
 ## User Interface to search character and phrases
 
-Application can be accessed from the below home page URL. Home page will be displayng the two options to navigate to phrase or character search. Both these pages will display the MDB JQuery data table accordingly. Data tables will be having the pagination, search option and navigate back to home page.
+Application can be accessed from the below home page URL. Home page will be displayng the two options to navigate to phrase or character search. Both these pages will display the MDB JQuery data table accordingly. Data tables will be having the pagination, search option and navigating back to home page.
 
 http://localhost:8083/home.html
 
