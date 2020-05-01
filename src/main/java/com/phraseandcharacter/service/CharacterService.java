@@ -54,15 +54,25 @@ public class CharacterService {
         }
     }
 
-    public void updateCharacter(CharacterData character) {
-        characterRepository.save(character);
-    }
-
     public void deleteCharacter(String characterId) {
         CharacterData character = characterRepository.findCharacterDataBy_id(characterId);
         if(character != null && character.get_id() != null){
             characterRepository.delete(character);
         }
+    }
+
+    public CharacterData updateCharacter(CharacterData character) {
+        CharacterData updatedCharacterData = null;
+        CharacterData existingCharacterData = null;
+        if (character != null && character.get_id() != null) {
+            existingCharacterData = characterRepository.findCharacterDataBy_id(character.get_id());
+        }
+        if (existingCharacterData != null && existingCharacterData.get_id() != null) {
+            updatedCharacterData = characterRepository.save(character);
+        } else {
+            return null;
+        }
+        return updatedCharacterData;
     }
 
 }

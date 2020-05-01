@@ -1,6 +1,7 @@
 package com.phraseandcharacter.controller;
 
 import com.phraseandcharacter.model.CharacterData;
+import com.phraseandcharacter.model.PhraseData;
 import com.phraseandcharacter.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,5 +68,16 @@ public class CharacterController {
             return new ResponseEntity<Boolean>(Boolean.FALSE, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
+    }
+
+    @PutMapping(path= "/editCharacter", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> editCharacterData(@RequestBody CharacterData characterData) {
+        CharacterData updatedCharacterData = null;
+        try{
+            updatedCharacterData = characterService.updateCharacter(characterData);
+        }catch(Exception e){
+            return new ResponseEntity<Object>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Object>(updatedCharacterData, HttpStatus.OK);
     }
 }

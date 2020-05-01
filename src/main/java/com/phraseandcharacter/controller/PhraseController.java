@@ -64,4 +64,15 @@ public class PhraseController {
         }
         return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
     }
+
+    @PutMapping(path= "/editPhrase", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> editPhrase(@RequestBody PhraseData phraseData) {
+        PhraseData updatedPhraseData = null;
+        try{
+            updatedPhraseData = phraseService.editPhrase(phraseData);
+        }catch(Exception e){
+            return new ResponseEntity<Object>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<Object>(updatedPhraseData, HttpStatus.OK);
+    }
 }
