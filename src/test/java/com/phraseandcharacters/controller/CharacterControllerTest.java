@@ -1,6 +1,7 @@
 package com.phraseandcharacters.controller;
 
 import com.phraseandcharacter.controller.CharacterController;
+import com.phraseandcharacter.exception.*;
 import com.phraseandcharacter.model.CharacterData;
 import com.phraseandcharacter.service.CharacterService;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,8 +44,7 @@ public class CharacterControllerTest {
     }
 
     @Test
-    public void testAddCharacter()
-    {
+    public void testAddCharacter() throws BadGatewayExcepton, ResourceNotFoundException, InternalServerException, BadDataRequestException, PhraseAndCharacterException {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(characterService.addCharacter(any(CharacterData.class))).thenReturn(characterData);
@@ -53,8 +53,7 @@ public class CharacterControllerTest {
     }
 
     @Test
-    public void testgetSpecificCharactersByFirstNameContains()
-    {
+    public void testgetSpecificCharactersByFirstNameContains() throws BadGatewayExcepton, ResourceNotFoundException, InternalServerException, BadDataRequestException, PhraseAndCharacterException {
         when(characterService.findCharacterDataByFirstNameContains("Paramasivam")).thenReturn(Arrays.asList(characterData));
         List<CharacterData> characterResults = characterController.getSpecificCharactersByFirstNameContains("Paramasivam");
         assertThat(characterResults.size()).isEqualTo(1);
