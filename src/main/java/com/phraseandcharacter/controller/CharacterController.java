@@ -55,7 +55,7 @@ public class CharacterController {
         return characterService.findCharacterDataByLastNameContains(lastName);
     }
 
-    @GetMapping(path = "/specificPhrase/{characterId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(path = "/specificCharacter/{characterId}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> getSpecificCharacterById(@PathVariable String characterId) throws ResourceNotFoundException, BadDataRequestException, BadGatewayExcepton, InternalServerException, PhraseAndCharacterException {
         Optional<CharacterData> characterData;
         try {
