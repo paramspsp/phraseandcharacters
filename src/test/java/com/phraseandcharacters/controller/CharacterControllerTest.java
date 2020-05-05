@@ -49,7 +49,8 @@ public class CharacterControllerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(characterService.addCharacter(any(CharacterData.class))).thenReturn(characterData);
         ResponseEntity<Object> responseEntity = characterController.addCharacter(characterData);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(HttpStatus.OK);
+        System.out.println(responseEntity.getStatusCodeValue());
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
     }
 
     @Test

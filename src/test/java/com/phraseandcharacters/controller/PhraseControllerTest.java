@@ -35,6 +35,7 @@ public class PhraseControllerTest {
     @BeforeAll
     public static void setUp(){
         phraseData = new PhraseData();
+        phraseData.set_id("59edee68706374dfa957852f");
         phraseData.setCharacter("59edee68706374dfa957842f");
         phraseData.setPhrase("Now we play the waiting game…Ahh, the waiting game sucks. Let’s play");
     }
@@ -46,8 +47,7 @@ public class PhraseControllerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         when(this.phraseService.addPhrase(any(PhraseData.class))).thenReturn(phraseData);
         ResponseEntity<Object> responseEntity = this.phraseController.addPhrase(this.phraseData);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(201);
-        assertThat(responseEntity.getHeaders().getLocation().getPath()).isEqualTo("/");
+        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
     }
 
     @Test

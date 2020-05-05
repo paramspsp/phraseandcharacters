@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  phraseandcharacters-app:
+    image: paramspsp/phraseandcharacters:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /data/phraseandcharacters-app
+    ports:
+      - "8080:8080"
