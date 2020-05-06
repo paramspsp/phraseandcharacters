@@ -24,6 +24,7 @@ public class CharacterServiceTest {
 
     private static CharacterData characterData1, characterData2;
 
+    
     @BeforeAll
     public static void setUp() {
         characterData1 = new com.phraseandcharacter.model.CharacterData();
