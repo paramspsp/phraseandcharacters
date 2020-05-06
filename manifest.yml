@@ -1,0 +1,6 @@
+---
+applications:
+  - name: phraseandcharacters
+    instances: 1
+    memory: 1G
+    path: target/phraseandcharacters-0.0.1-SNAPSHOT.jar
